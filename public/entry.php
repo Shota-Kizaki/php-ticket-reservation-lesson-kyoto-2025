@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-use Twig\Loader\FilesystemLoader;
-use Twig\Environment;
+require_once __DIR__ . '/../app/initialize.php';
 
 // tokenの把握
 if ('' === ($token = strval($_GET['token'] ?? ''))) {
@@ -11,14 +10,6 @@ if ('' === ($token = strval($_GET['token'] ?? ''))) {
     header('Location: /index.php');
     exit;
 }
-
-// テンプレートエンジンを使う
-require_once __DIR__ . '/../vendor/autoload.php';
-$loader = new FilesystemLoader(__DIR__ . '/../views');
-$twig = new Environment($loader, [
-  // 開発時だけ有効化
-  // 'strict_variables' => true,
-]);
 
 /* tokenの確認 */
 // DBハンドルの取得
