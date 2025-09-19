@@ -40,7 +40,6 @@ class TicketTokenUsage
             $res = $pre->execute();
             // コミット
             $dbh->commit();
-if 
         } catch (\PDOException $e) {
             // XXX 暫定: 本来はlogに出力する & エラーページを出力する
             echo $e->getMessage();
