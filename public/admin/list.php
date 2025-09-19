@@ -46,7 +46,7 @@ try {
 }
 
 // 表示
-$base_url = 'http://game.m-fr.net:8002/';
+$base_url = $config['base_url'];
 echo $twig->render('admin/list.twig', [
     'list' => $list,
     'base_url' => $base_url,
