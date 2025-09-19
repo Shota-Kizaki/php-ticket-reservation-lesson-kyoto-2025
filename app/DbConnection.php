@@ -1,4 +1,6 @@
-<?php  // DbConnection.php
+<?php
+
+// DbConnection.php
 
 declare(strict_types=1);
 
@@ -7,13 +9,16 @@ namespace App;
 use App\Config;
 use PDO;
 
-class DbConnection {
+class DbConnection
+{
     // Singletonパターンっぽく
-    private function __construct() {
+    private function __construct()
+    {
     }
 
     //
-    public static function get(): \PDO {
+    public static function get(): \PDO
+    {
         static $dbh = null;
         if ($dbh === null) {
             // DB接続処理
@@ -28,7 +33,7 @@ class DbConnection {
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // エラーが発生した場合、PDOException をスロー
             ];
             $dbh = new \PDO($dsn, $db_config['user'], $db_config['pass'], $opt);
-    }
+        }
         return $dbh;
     }
 }

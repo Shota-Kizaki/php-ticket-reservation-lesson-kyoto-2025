@@ -1,4 +1,6 @@
-<?php // initialize.php
+<?php
+
+// initialize.php
 
 declare(strict_types=1);
 
