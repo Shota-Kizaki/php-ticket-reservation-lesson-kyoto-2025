@@ -45,7 +45,7 @@ class TicketTokenUsage
             echo $e->getMessage();
             exit;
         }
-        return $datum;
+        return $tokenUsage;
     }
     
     public static function markAsUsed(string $token): bool
