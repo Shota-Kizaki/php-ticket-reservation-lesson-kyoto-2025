@@ -26,4 +26,22 @@ class TicketPurchase
         }
         return $list;
     }
+    // tokenから情報を取得
+    public static function getByToken(string $token): array|false
+    {
+        try {
+            // $dbh = new \PDO($dsn, $db_config['user'], $db_config['pass'], $opt);
+            $dbh = DbConnection::get();
+            // プリペアドステートメント
+            $stmt = $dbh->prepare('SELECT * FROM ticket_purchases WHERE token = :token;');
+            $stmt->bindValue(':token', $token, \PDO::PARAM_STR);
+            $stmt->execute();
+            $datum = $stmt->fetch();
+        } catch (\PDOException $e) {
+            // XXX 暫定: 本来はlogに出力する & エラーページを出力する
+            echo $e->getMessage();
+            exit;
+        }
+        return $datum;
+    }
 }
