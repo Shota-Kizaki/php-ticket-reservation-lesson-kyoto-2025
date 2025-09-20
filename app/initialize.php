@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
+use App\Config;
 
 // セッション開始
 ob_start();
@@ -19,8 +20,15 @@ $twig = new Environment($loader, [
   // 'strict_variables' => true,
 ]);
 
+
 // タイムゾーン
 date_default_timezone_set('Asia/Tokyo');
 
 header('X-Frame-Options: DENY');
 header('X-Content-Type-Options: nosniff');
+// イベントポリシーの取得
+$event = Config::get('event');
+$event_policy = new $event['policy_class'](
+    new $event['quantity_policy']['class'](),
+    new $event['email_validator']['class']()
+);

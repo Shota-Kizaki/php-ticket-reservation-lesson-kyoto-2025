@@ -6,7 +6,6 @@ namespace App\Models;
 
 use App\DbConnection;
 
-
 class TicketTokenUsage
 {
     // tokenから情報を取得
@@ -47,7 +46,7 @@ class TicketTokenUsage
         }
         return $tokenUsage;
     }
-    
+
     public static function markAsUsed(string $token): bool
     {
         try {
