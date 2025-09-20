@@ -21,7 +21,7 @@ abstract class AbstractEventPolicy implements EventPolicyInterface
     }
 
     // emailのvalidate
-    public function emailValidate(string $email): string|false
+    public function validateEmail(string $email): string|false
     {
         return $this->emailValidator->validate($email);
     }
