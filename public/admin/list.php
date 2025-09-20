@@ -18,7 +18,7 @@ if (false === isset($_SESSION['admin_logged_in'])) {
 $list = TicketPurchase::getAll();
 
 // 表示
-$base_url = 'http://game.m-fr.net:8002/';
+$base_url = 'http://game.m-fr.net:8002';
 echo $twig->render('admin/list.twig', [
     'list' => $list,
     'base_url' => $base_url,

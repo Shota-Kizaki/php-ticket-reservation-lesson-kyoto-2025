@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../app/initialize.php';
 
+use App\Config;
 use App\DbConnection;
+use App\Models\TicketPurchase;
+
 
 // 入力を受け取る
 // [TODO] POSTからname/email/quantityを受け取る
@@ -34,18 +37,35 @@ if ($input['purchaser_name'] === '') {
 // [TODO] emailが「空でないこと」「emailのフォーマットとして適切であること」の確認
 if ($input['email'] === '') {
     $errord['email'] = 'メールアドレスを入力してください';
-} elseif (false === filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
-    $errord['email'] = 'メールアドレスの形式が正しくありません';
+} else {
+    $email = $event_policy->emailValidate($input['email']);
+    // メアドの重複チェック
+    $allow_duplicate_email = Config::get('event')['allow_duplicate_email'] ?? false; //デフォルト不許可
+    if (false === filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
+        $errord['email'] = 'メールアドレスの形式が正しくありません';
+    } elseif (false === $allow_duplicate_email) {
+        // 重複チェックを行う
+        $ticket = TicketPurchase::getByEmail($email);
+        if (false !== $ticket) {
+            $errord['email'] = 'このメールアドレスは既に使われています';
+        }
+    }
 }
 
 // チケットの枚数
 // [TODO] quantityが「空でないこと」「整数であること」の確認
 if ($input['quantity'] === '') {
     $errord['quantity'] = 'チケットの枚数を入力してください';
-} elseif (false === filter_var($input['quantity'], FILTER_VALIDATE_INT)) {
-    $errord['quantity'] = 'チケットの枚数は整数で入力してください';
-} elseif ((int)$input['quantity'] <= 0) {
-    $errord['quantity'] = 'チケットの枚数は1以上で入力してください';
+} else {
+    $quantity = filter_var($input['quantity'], FILTER_VALIDATE_INT);
+    if (false === $quantity){
+        $errord['quantity'] = 'チケットの枚数は整数で入力してください';
+    } elseif (0 >= filter_var($input['quantity'], FILTER_VALIDATE_INT)) {
+        $errord['quantity'] = 'チケットの枚数は1以上で入力してください';
+    } elseif (false === $event_policy->canReserveQuantity(intval($input["quantity"]))) {
+        $max = Config::get('event')['quantity_policy']['options']['max_per_order'];
+        $errord['quantity'] = "チケット枚数は{$max}枚以内でお願いします";
+    }
 }
 
 // エラーがあった場合、入力フォームに戻す
