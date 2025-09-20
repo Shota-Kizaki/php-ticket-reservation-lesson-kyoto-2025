@@ -15,16 +15,16 @@ if ('' === ($token = strval($_GET['token'] ?? ''))) {
     exit;
 }
 
-/* tokenの確認 */
 $datum = TicketPurchase::getByToken($token);
-
 // なかったらエラー出力
 if (false === $datum) {
     echo $twig->render('entry_error.twig');
     exit;
-} else {
-    // tokenがあったら、使用履歴を登録する
-    TicketTokenUsage::consumeToken($token);
+}
+
+if (false === TicketTokenUsage::consumeToken($token)) {
+    echo "token使用済";
+    exit;
 }
 
 // 使用
