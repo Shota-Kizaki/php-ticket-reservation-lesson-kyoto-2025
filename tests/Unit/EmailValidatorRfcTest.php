@@ -24,10 +24,11 @@ final class EmailValidatorRfcTest extends TestCase
         ];
 
         $validator = new EmailValidatorRfc();
-        $r = $validator->validate($email);
-
-        $this->assertNotSame(false, $r);
-        // $this->assertSame($email, $r);
+        foreach ($ok_data as $email) {
+            $r = $validator->validate($email);
+            $this->assertNotSame(false, $r, "Failed: {$email}");
+            // $this->assertSame($email, $r);
+        }
     }
 
     public function testNG(): void
