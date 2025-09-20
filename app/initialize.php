@@ -30,4 +30,5 @@ header('X-Content-Type-Options: nosniff');
 $event = Config::get('event');
 $event_policy = new $event['policy_class'](
     new $event['quantity_policy']['class'](),
+    new $event['email_validator']['class']()
 );
