@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace App\Domain\Validate;
 
 class EmailValidatorSimple implements EmailValidatorInterface
@@ -11,4 +12,3 @@ class EmailValidatorSimple implements EmailValidatorInterface
         return preg_match('/^.+@.+$/', $email) ? $email : false;
     }
 }
- 

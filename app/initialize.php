@@ -8,7 +8,6 @@ use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 use App\Config;
 
-
 // セッション開始
 ob_start();
 session_start();

@@ -11,8 +11,7 @@ abstract class AbstractEventPolicy implements EventPolicyInterface
     public function __construct(
         private TicketQuantityPolicyInterface $ticketQuantityPolicy,
         private EmailValidatorInterface $emailValidator,
-    )
-    {
+    ) {
     }
 
     // 予約可能なチケットの枚数か

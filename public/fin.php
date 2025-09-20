@@ -8,7 +8,6 @@ use App\Config;
 use App\DbConnection;
 use App\Models\TicketPurchase;
 
-
 // 入力を受け取る
 // [TODO] POSTからname/email/quantityを受け取る
 // [TODO] 受け取ったデータは、$input 変数に連想配列の形で格納する
@@ -58,7 +57,7 @@ if ($input['quantity'] === '') {
     $errord['quantity'] = 'チケットの枚数を入力してください';
 } else {
     $quantity = filter_var($input['quantity'], FILTER_VALIDATE_INT);
-    if (false === $quantity){
+    if (false === $quantity) {
         $errord['quantity'] = 'チケットの枚数は整数で入力してください';
     } elseif (0 >= filter_var($input['quantity'], FILTER_VALIDATE_INT)) {
         $errord['quantity'] = 'チケットの枚数は1以上で入力してください';

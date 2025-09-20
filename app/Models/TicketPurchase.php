@@ -36,7 +36,7 @@ class TicketPurchase
             exit;
         }
         return $datum;
-    }  
+    }
 
     // emailから情報を取得
     public static function getByEmail(string $email): array|false
@@ -44,12 +44,12 @@ class TicketPurchase
         return static::getby('email', $email);
     }
 
-        // tokenから情報を取得
+    // tokenから情報を取得
     public static function getByToken(string $token): array|false
     {
         return static::getby('token', $token);
     }
-       
+
 
     // 全権取得
     public static function getAll(): array
